@@ -2,10 +2,13 @@ package br.com.liandro.steps;
 
 import br.com.liandro.page.AlarmePageObject;
 import br.com.liandro.utils.Utils;
-import org.junit.After;
-import org.junit.Before;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.pt.Dado;
+import io.cucumber.java.pt.E;
+import io.cucumber.java.pt.Então;
+import io.cucumber.java.pt.Quando;
 import org.junit.FixMethodOrder;
-import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
@@ -26,14 +29,23 @@ public class AlarmeStepsTest {
         utils.driver.quit();
     }
 
-    @Test
-    public void adicionarUmAlarme() throws IOException {
-
+    @Dado("que eu esteja na tela inicial do App relógio")
+    public void que_eu_esteja_na_tela_inicial_do_App_relógio() throws IOException {
         AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
 
         alarmePageObject.clicarNoBotaoAlarmeEValidarTelaDeAlarme("adicionar um alarme");
+    }
+
+    @Quando("eu clicar em adicionar um alarme")
+    public void eu_clicar_em_adicionar_um_alarme() throws IOException {
+        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
 
         alarmePageObject.clicarEmAdicionarAlarme();
+    }
+
+    @E("preencher todos os requisitos")
+    public void preencher_todos_os_requisitos() throws IOException {
+        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
 
         alarmePageObject.clicarEmAlternarModoDeEntrada();
 
@@ -57,27 +69,14 @@ public class AlarmeStepsTest {
         alarmePageObject.clicarNoBotaoOkEEvidenciar("ao finalizar cadastro de alarme");
 
         alarmePageObject.clicarNoBotaoRecolherAlarme();
-
-        alarmePageObject.verificarAlarmeEHorario(" ao finalizar inclusão do alarme");
-
-        alarmePageObject.verificarSeMarcadorRecebeuNomeDefinido();
-
     }
 
-    //@Test
-//    public void excluirAlarme() throws IOException {
-//        clicarNoBotaoAlarmeEValidarTelaDeAlarme("excluir alarme");
-//
-//        driver.findElementByAccessibilityId("Marcador Alarme Workshop").click();
-//        tirarPrintEImprimirNoLog("Clicar no Alarme Workshop");
-//
-//        driver.findElementById("com.google.android.deskclock:id/delete").click();
-//        tirarPrintEImprimirNoLog("Clicar no botão para excluir Alarme Workshop");
-//
-//        Assert.assertTrue(driver.findElementById("com.google.android.deskclock:id/snackbar_text").isDisplayed());
-//        Assert.assertEquals("Alarme excluído", driver.findElementById("com.google.android.deskclock:id/snackbar_text").getText());
-//        tirarPrintEImprimirNoLog("Validamos que o alarme foi excluído com sucesso");
-//
-//    }
+    @Então("devo validar que foi adicionado um alarme com sucesso")
+    public void devo_validar_que_foi_adicionado_um_alarme_com_sucesso() throws IOException {
+        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
+
+        alarmePageObject.verificarAlarmeEHorario(" ao finalizar inclusão do alarme");
+        alarmePageObject.verificarSeMarcadorRecebeuNomeDefinido();
+    }
 
 }
