@@ -18,10 +18,12 @@ import java.net.MalformedURLException;
 public class AlarmeStepsTest {
 
     private Utils utils = new Utils();
+    AlarmePageObject alarmePageObject;
 
     @Before
     public void iniciar() throws MalformedURLException {
         utils.iniciar();
+        alarmePageObject = new AlarmePageObject(utils.driver);
     }
 
     @After
@@ -31,22 +33,16 @@ public class AlarmeStepsTest {
 
     @Dado("que eu esteja na tela inicial do App relógio")
     public void que_eu_esteja_na_tela_inicial_do_App_relógio() throws IOException {
-        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
-
         alarmePageObject.clicarNoBotaoAlarmeEValidarTelaDeAlarme("adicionar um alarme");
     }
 
     @Quando("eu clicar em adicionar um alarme")
     public void eu_clicar_em_adicionar_um_alarme() throws IOException {
-        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
-
         alarmePageObject.clicarEmAdicionarAlarme();
     }
 
     @E("preencher todos os requisitos")
     public void preencher_todos_os_requisitos() throws IOException {
-        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
-
         alarmePageObject.clicarEmAlternarModoDeEntrada();
 
         alarmePageObject.verificarQueDialogFoiExibida();
@@ -73,8 +69,6 @@ public class AlarmeStepsTest {
 
     @Então("devo validar que foi adicionado um alarme com sucesso")
     public void devo_validar_que_foi_adicionado_um_alarme_com_sucesso() throws IOException {
-        AlarmePageObject alarmePageObject = new AlarmePageObject(utils.driver);
-
         alarmePageObject.verificarAlarmeEHorario(" ao finalizar inclusão do alarme");
         alarmePageObject.verificarSeMarcadorRecebeuNomeDefinido();
     }

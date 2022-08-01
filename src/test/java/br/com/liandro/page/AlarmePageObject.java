@@ -2,11 +2,14 @@ package br.com.liandro.page;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,12 +17,22 @@ import java.time.LocalDateTime;
 
 public class AlarmePageObject {
 
+    @AndroidFindBy( xpath = "//android.widget.Button[@text='OK']" )
+    private MobileElement botaoOk;
+
+    @AndroidFindBy( id = "android:id/input_hour" )
+    private MobileElement campoHora;
+
+    @AndroidFindBy( id = "android:id/input_minute" )
+    private MobileElement campoMinutos;
+
     LocalDateTime dateTime = LocalDateTime.now();
 
     AppiumDriver<MobileElement> driver;
 
     public AlarmePageObject(AppiumDriver<MobileElement> driver) {
         this.driver = driver;
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     public void tirarPrintTela(String nomeEtapa) throws IOException {
@@ -38,13 +51,13 @@ public class AlarmePageObject {
     }
 
     public void verificarAlarmeEHorario(String passoNome) throws IOException {
-        Assert.assertTrue(driver.findElementByAccessibilityId("10:00").isDisplayed());
+        driver.findElementByAccessibilityId("10:00").isDisplayed();
         Assert.assertEquals("10:00", driver.findElementByAccessibilityId("10:00").getText());
         tirarPrintEImprimirNoLog("Confirmei que a hora cadastrada esta de acordo com os valores enviados " + passoNome);
     }
 
     public void clicarNoBotaoOkEEvidenciar(String passoAtual) throws IOException {
-        driver.findElement(By.xpath("//android.widget.Button[@text='OK']")).click();
+        botaoOk.click();
         tirarPrintEImprimirNoLog("Cliquei no botao OK " + passoAtual);
     }
 
@@ -52,7 +65,7 @@ public class AlarmePageObject {
         driver.findElementByAccessibilityId("Alarme").click();
         tirarPrintEImprimirNoLog("Clicou no botao Alarme " + passoAtual);
 
-        Assert.assertTrue(driver.findElementById("com.google.android.deskclock:id/action_bar_title").isDisplayed());
+        driver.findElementById("com.google.android.deskclock:id/action_bar_title").isDisplayed();
         Assert.assertEquals("Alarme", driver.findElementById("com.google.android.deskclock:id/action_bar_title").getText());
         tirarPrintEImprimirNoLog("Validamos que a tela de Alarme foi exibida " + passoAtual);
     }
@@ -74,14 +87,14 @@ public class AlarmePageObject {
     }
 
     public void preencherCampoHoras(String hora) throws IOException {
-        driver.findElementById("android:id/input_hour").clear();
-        driver.findElementById("android:id/input_hour").sendKeys(hora);
+        campoHora.clear();
+        campoHora.sendKeys(hora);
         tirarPrintEImprimirNoLog("Lancei o valor 10 no campo hora");
     }
 
     public void preencherCampoMinutos(String minutos) throws IOException {
-        driver.findElementById("android:id/input_minute").clear();
-        driver.findElementById("android:id/input_minute").sendKeys(minutos);
+        campoMinutos.clear();
+        campoMinutos.sendKeys(minutos);
         tirarPrintEImprimirNoLog("Lancei o valor 00 no campo minuto");
     }
 
