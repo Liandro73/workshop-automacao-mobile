@@ -3,19 +3,17 @@ package br.com.liandro.page;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class AlarmePageObject {
+public class AlarmePageObject extends BasePage {
 
     @AndroidFindBy( xpath = "//android.widget.Button[@text='OK']" )
     private MobileElement botaoOk;
@@ -28,11 +26,8 @@ public class AlarmePageObject {
 
     LocalDateTime dateTime = LocalDateTime.now();
 
-    AppiumDriver<MobileElement> driver;
-
     public AlarmePageObject(AppiumDriver<MobileElement> driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
 
     public void tirarPrintTela(String nomeEtapa) throws IOException {

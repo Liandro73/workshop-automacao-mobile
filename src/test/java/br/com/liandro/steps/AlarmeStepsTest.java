@@ -1,34 +1,27 @@
 package br.com.liandro.steps;
 
-import br.com.liandro.page.AlarmePageObject;
 import br.com.liandro.utils.Utils;
 import io.cucumber.java.After;
-import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class AlarmeStepsTest {
+public class AlarmeStepsTest extends BaseSteps {
 
     private Utils utils = new Utils();
-    AlarmePageObject alarmePageObject;
 
-    @Before
-    public void iniciar() throws MalformedURLException {
-        utils.iniciar();
-        alarmePageObject = new AlarmePageObject(utils.driver);
+    public AlarmeStepsTest() throws MalformedURLException {
     }
 
     @After
     public void finalizar() {
-        utils.driver.quit();
+        if(utils.driver != null) {
+            utils.driver.quit();
+        }
     }
 
     @Dado("que eu esteja na tela inicial do App relógio")
